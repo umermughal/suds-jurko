@@ -34,7 +34,7 @@ from suds.plugin import PluginContainer
 from copy import deepcopy
 
 
-envns = ('SOAP-ENV', 'http://schemas.xmlsoap.org/soap/envelope/')
+#####envns = ('SOAP-ENV', 'http://schemas.xmlsoap.org/soap/envelope/')
 
 
 class Binding:
