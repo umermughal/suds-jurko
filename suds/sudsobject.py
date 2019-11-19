@@ -110,7 +110,7 @@ class Factory:
             inst = subclass()
         else:
             inst = Object()
-        for a in dict.items():
+        for a in list(dict.items()):
             setattr(inst, a[0], a[1])
         return inst
 
@@ -146,7 +146,7 @@ class Object(UnicodeMixin):
                 self.__keylist__.remove(name)
         except:
             cls = self.__class__.__name__
-            raise AttributeError, "%s has no attribute '%s'" % (cls, name)
+            raise AttributeError("%s has no attribute '%s'" % (cls, name))
 
     def __getitem__(self, name):
         if isinstance(name, int):
@@ -179,7 +179,7 @@ class Iter:
         self.keylist = self.__keylist(sobject)
         self.index = 0
 
-    def next(self):
+    def __next__(self):
         keylist = self.keylist
         nkeys = len(self.keylist)
         while self.index < nkeys:
@@ -271,7 +271,7 @@ class Printer:
             if len(object) == 0:
                 return '<empty>'
             return self.print_collection(object, h, n+2)
-        if isinstance(object, basestring):
+        if isinstance(object, str):
             return '"%s"' % tostr(object)
         return '%s' % tostr(object)
 
@@ -325,7 +325,7 @@ class Printer:
             s.append('\n')
             s.append(self.indent(n))
         s.append('{')
-        for item in d.items():
+        for item in list(d.items()):
             s.append('\n')
             s.append(self.indent(n+1))
             if isinstance(item[1], (list,tuple)):
