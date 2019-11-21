@@ -34,9 +34,6 @@ from suds.plugin import PluginContainer
 from copy import deepcopy
 
 
-envns = ('SOAP-ENV', 'http://schemas.xmlsoap.org/soap/envelope/')
-
-
 class Binding:
     """
     The SOAP binding class used to process outgoing and incoming SOAP messages
@@ -130,9 +127,9 @@ class Binding:
             or a collection.
         @rtype: L{Object} or I{list}
         """
-        soapenv = replyroot.getChild('Envelope', envns)
+        soapenv = replyroot.getChild('Envelope', self.options().envns)
         soapenv.promotePrefixes()
-        soapbody = soapenv.getChild('Body', envns)
+        soapbody = soapenv.getChild('Body', self.options().envns)
         soapbody = self.multiref.process(soapbody)
         nodes = self.replycontent(method, soapbody)
         rtypes = self.returned_types(method)
@@ -256,7 +253,7 @@ class Binding:
         @return: The SOAP envelope containing the body and header.
         @rtype: L{Element}
         """
-        env = Element('Envelope', ns=envns)
+        env = Element('Envelope', ns=self.options().envns)
         env.addPrefix(Namespace.xsins[0], Namespace.xsins[1])
         env.append(header)
         env.append(body)
@@ -270,7 +267,7 @@ class Binding:
         @return: the SOAP body fragment.
         @rtype: L{Element}
         """
-        header = Element('Header', ns=envns)
+        header = Element('Header', ns=self.options().envns)
         header.append(content)
         return header
 
@@ -349,7 +346,7 @@ class Binding:
         @return: The SOAP body fragment.
         @rtype: L{Element}
         """
-        body = Element('Body', ns=envns)
+        body = Element('Body', ns=self.options().envns)
         body.append(content)
         return body
 

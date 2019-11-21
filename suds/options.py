@@ -146,5 +146,6 @@ class Options(Skin):
             Definition('cachingpolicy', int, 0),
             Definition('plugins', (list, tuple), []),
             Definition('nosend', bool, False),
-            Definition('unwrap', bool, True)]
+            Definition('unwrap', bool, True),
+            Definition('envns', (), ('SOAP-ENV', 'http://schemas.xmlsoap.org/soap/envelope/'))]
         Skin.__init__(self, domain, definitions, kwargs)
