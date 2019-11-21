@@ -20,7 +20,7 @@ Provides classes for the (WS) SOAP I{rpc/literal} and I{rpc/encoded} bindings.
 from suds import *
 from suds.mx.encoded import Encoded as MxEncoded
 from suds.umx.encoded import Encoded as UmxEncoded
-from suds.bindings.binding import Binding, envns
+from suds.bindings.binding import Binding
 from suds.sax.element import Element
 
 
@@ -37,7 +37,7 @@ class RPC(Binding):
     def envelope(self, header, body):
         env = Binding.envelope(self, header, body)
         env.addPrefix(encns[0], encns[1])
-        env.set('%s:encodingStyle' % envns[0],
+        env.set('%s:encodingStyle' % self.options().envns[0],
                 'http://schemas.xmlsoap.org/soap/encoding/')
         return env
 

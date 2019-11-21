@@ -704,10 +704,9 @@ class SoapClient:
         @return: A fault object.
         @rtype: L{Object}
         """
-        envns = suds.bindings.binding.envns
-        soapenv = replyroot and replyroot.getChild('Envelope', envns)
-        soapbody = soapenv and soapenv.getChild('Body', envns)
-        fault = soapbody and soapbody.getChild('Fault', envns)
+        soapenv = replyroot and replyroot.getChild('Envelope', self.client.options.envns)
+        soapbody = soapenv and soapenv.getChild('Body', self.client.options.envns)
+        fault = soapbody and soapbody.getChild('Fault', self.client.options.envns)
         return fault is not None and UmxBasic().process(fault)
 
     def headers(self):
